@@ -1,0 +1,24 @@
+from flask import Flask
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)  # allows fro
+
+ntend to talk to backend
+
+@app.route("/")
+def home():
+    return {"message": "Jirani Services API is running 🚀"}
+
+if __name__ == "__main__":
+    app.run(debug=True)from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return {"message": "Jirani Services API is running 🚀"}
+
+if __name__ == "__main__":
+    app.run(debug=True)
+    return {"message": "Jirani Services API is running 🚀"}    return {"message": "Jirani Services API is running 🚀"}
