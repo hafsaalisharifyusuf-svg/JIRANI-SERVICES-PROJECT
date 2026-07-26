@@ -17,7 +17,7 @@ const HeroSection = ({ onSearch }) => {
                 <FaStar className="text-yellow-400" />
                 <FaStar className="text-yellow-400" />
                 <FaStar className="text-yellow-400" />
-                <span className="ml-1">(2,000+ reviews)</span>
+                <span className="ml-1">(no reviews )</span>
               </span>
             </div>
             
@@ -36,7 +36,7 @@ const HeroSection = ({ onSearch }) => {
             <div className="flex flex-wrap gap-4 mt-6 text-sm">
               <div className="flex items-center gap-1">
                 <FiCheckCircle className="text-green-400" />
-                <span>500+ Verified Workers</span>
+                <span>20 Verified Workers</span>
               </div>
               <div className="flex items-center gap-1">
                 <FiCheckCircle className="text-green-400" />

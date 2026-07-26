@@ -1,0 +1,16 @@
+# Python virtual environment
+backened/venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Flask instance files
+backened/instance/
+
+# Environment variables
+.env
+backened/.env
+
+# React
+frontend/node_modules/

@@ -1,14 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiUser, FiLock, FiLogIn, FiShield, FiAlertCircle, FiEye, FiEyeOff } from 'react-icons/fi';
+import { 
+  FiUser, FiLock, FiLogIn, FiAlertCircle, 
+  FiEye, FiEyeOff, FiArrowLeft
+} from 'react-icons/fi';
 import { MdAdminPanelSettings } from 'react-icons/md';
+import Footer from '../components/Footer';
 
 const AdminLogin = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    setFormData({ email: '', password: '' });
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,118 +37,111 @@ const AdminLogin = () => {
         localStorage.setItem('adminLoggedIn', 'true');
         navigate('/admin/dashboard');
       } else {
-        setError('Invalid email or password. Please try again.');
+        setError('Invalid email or password');
       }
       setLoading(false);
     }, 1000);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center py-12 px-4">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
-            <div className="bg-blue-600 p-3 rounded-2xl shadow-lg">
-              <MdAdminPanelSettings className="text-white text-4xl" />
-            </div>
-          </div>
-          <h1 className="text-3xl font-bold text-gray-800">Jirani Services</h1>
-          <p className="text-gray-600 mt-1">Admin Dashboard Login</p>
-        </div>
+    <div className="min-h-screen bg-[#f8fafc] flex flex-col">
+      
+      {/* Main Content */}
+      <div className="flex-1 flex items-center justify-center p-4">
+        <div className="w-full max-w-md">
+          
+          <button
+            onClick={() => navigate('/')}
+            className="text-gray-400 hover:text-gray-600 mb-6 flex items-center gap-2 transition text-sm"
+          >
+            <FiArrowLeft />
+            Back to Home
+          </button>
 
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <div className="flex items-center gap-2 mb-6">
-            <FiShield className="text-blue-600 text-xl" />
-            <h2 className="text-xl font-semibold text-gray-800">Administrator Access</h2>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {error && (
-              <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg flex items-start gap-3">
-                <FiAlertCircle className="text-red-500 text-xl flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-red-700 text-sm font-medium">Login Failed</p>
-                  <p className="text-red-600 text-sm">{error}</p>
-                </div>
+          <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+            
+            <div className="text-center mb-8">
+              <div className="w-16 h-16 bg-[#1a56db] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-[#1a56db]/20">
+                <MdAdminPanelSettings className="text-white text-3xl" />
               </div>
-            )}
-
-            <div>
-              <label className="block text-gray-700 font-medium mb-2 text-sm">
-                <FiUser className="inline mr-2" /> Email Address
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FiUser className="text-gray-400" />
-                </div>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="admin@jiraniservices.com"
-                  required
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                />
-              </div>
+              <h1 className="text-2xl font-bold text-[#0f172a]">Admin Login</h1>
+              <p className="text-gray-500 text-sm mt-1">Access your dashboard</p>
             </div>
 
-            <div>
-              <label className="block text-gray-700 font-medium mb-2 text-sm">
-                <FiLock className="inline mr-2" /> Password
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FiLock className="text-gray-400" />
+            <form onSubmit={handleSubmit} className="space-y-5">
+              
+              {error && (
+                <div className="bg-red-50 border border-red-200 p-3 rounded-xl flex items-center gap-2 text-red-600 text-sm">
+                  <FiAlertCircle className="text-red-500 text-lg flex-shrink-0" />
+                  {error}
                 </div>
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder="••••••••"
-                  required
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                >
-                  {showPassword ? <FiEyeOff className="text-gray-400 hover:text-gray-600" /> : <FiEye className="text-gray-400 hover:text-gray-600" />}
-                </button>
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition font-semibold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-blue-600/30"
-            >
-              {loading ? 'Logging in...' : (
-                <>
-                  <FiLogIn />
-                  Login to Dashboard
-                </>
               )}
-            </button>
 
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <p className="text-sm text-blue-800"><strong>Demo Credentials:</strong></p>
-              <div className="mt-1 text-sm text-blue-700 space-y-1">
-                <p>📧 Email: <span className="font-mono bg-blue-100 px-2 py-0.5 rounded">admin@jiraniservices.com</span></p>
-                <p>🔑 Password: <span className="font-mono bg-blue-100 px-2 py-0.5 rounded">admin123</span></p>
+              <div>
+                <label className="block text-gray-700 font-medium mb-2 text-sm">Email Address</label>
+                <div className="relative">
+                  <FiUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Enter your email"
+                    autoComplete="off"
+                    required
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1a56db] focus:border-transparent transition"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="text-center">
-              <button type="button" onClick={() => navigate('/')} className="text-gray-500 hover:text-blue-600 text-sm transition">
-                ← Back to Home
+              <div>
+                <label className="block text-gray-700 font-medium mb-2 text-sm">Password</label>
+                <div className="relative">
+                  <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Enter your password"
+                    autoComplete="new-password"
+                    required
+                    className="w-full pl-10 pr-12 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1a56db] focus:border-transparent transition"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  >
+                    {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+                  </button>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-[#1a56db] text-white py-3 rounded-xl hover:bg-[#1e40af] transition font-semibold flex items-center justify-center gap-2 disabled:opacity-50 shadow-lg shadow-[#1a56db]/20"
+              >
+                {loading ? (
+                  <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <>
+                    <FiLogIn />
+                    Login
+                  </>
+                )}
               </button>
-            </div>
-          </form>
+
+            </form>
+          </div>
+
         </div>
       </div>
+
+      {/* ===== REUSE EXISTING FOOTER ===== */}
+      <Footer />
+
     </div>
   );
 };
